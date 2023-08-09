@@ -6,6 +6,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 
 import net.aydini.sexel.exception.SexelException;
+import org.apache.poi.ss.usermodel.DateUtil;
 
 /**
  * 
@@ -31,6 +32,8 @@ public class CellValueExtractor {
 	            return null;
 	        if(cell.getCellType() == CellType.STRING)
 	            return cell.getStringCellValue();
+	        if (DateUtil.isCellDateFormatted(cell))
+	            return cell.getDateCellValue();
 	        if(cell.getCellType() == CellType.NUMERIC)
 	            return convertNumeric(cell.getNumericCellValue(),fieldType);
 	        return cell.getStringCellValue();

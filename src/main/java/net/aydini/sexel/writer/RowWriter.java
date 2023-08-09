@@ -57,9 +57,14 @@ public class RowWriter extends AbstractWriter {
 
 	protected void doWrite() throws Exception {
 		fields.parallelStream().forEach(field ->{
-			Cell cell = row.createCell(field.getAnnotation(SexelField.class).columnIndex());
-			new CellWriter(getConfigurationProperty(), cell).setWorkBookHolder(workBookHolder).setField(field).setIsHeader(isHeader)
-					.setCellValue(getCellValue(field, rowData, isHeader)).write();
+			SexelField sexelField = field.getAnnotation(SexelField.class);
+			if (sexelField != null) {
+				Cell cell = row.createCell(sexelField.columnIndex());
+				new CellWriter(getConfigurationProperty(), cell).setWorkBookHolder(workBookHolder)
+						.setField(field).setIsHeader(isHeader)
+						.setCellValue(getCellValue(field, rowData, isHeader))
+						.write();
+			}
 		});
 	}
 
